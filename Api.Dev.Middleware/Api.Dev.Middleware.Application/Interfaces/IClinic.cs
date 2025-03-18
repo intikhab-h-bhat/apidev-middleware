@@ -10,6 +10,7 @@ namespace Api.Dev.Middleware.Application.Interfaces
     public interface IClinic
     {
         Task<IEnumerable<ClinicDto>>  GetAllClinicsAsync();
+        Task<bool> AddClinicAsync(ClinicDto clinicDto);
 
     }
 }

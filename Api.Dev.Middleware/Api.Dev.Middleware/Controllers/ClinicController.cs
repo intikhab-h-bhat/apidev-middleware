@@ -41,6 +41,14 @@ namespace Api.Dev.Middleware.Controllers
             }
         }
 
+        [HttpPost]
+
+        public async Task<ActionResult<bool>> AddClinicAsync([FromBody] ClinicDto clinicDto)
+        {
+
+             return await _clinicService.AddClinicAsync(clinicDto);
+        }
+
 
 
     }

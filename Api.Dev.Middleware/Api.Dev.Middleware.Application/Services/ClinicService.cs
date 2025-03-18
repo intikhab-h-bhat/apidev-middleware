@@ -1,5 +1,6 @@
 ﻿using Api.Dev.Middleware.Application.Dtos.ClinicDto;
 using Api.Dev.Middleware.Application.Interfaces;
+using Api.Dev.Middleware.Domain.Entities;
 using Api.Dev.Middleware.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,23 @@ namespace Api.Dev.Middleware.Application.Services
             _clinicRepository = clinicRepository;
         }
 
+        public async Task<bool> AddClinicAsync(ClinicDto clinicDto)
+        {
+            
+
+            Clinic addClinic = new Clinic();
+            addClinic.ClinicName = clinicDto.ClinicName;
+            addClinic.Address = clinicDto.Address;
+            addClinic.Email = clinicDto.Email;
+            addClinic.ContactNumber = clinicDto.ContactNumber;
+            addClinic.Website = clinicDto.Website;
+
+
+            return await _clinicRepository.AddClinicAsync(addClinic);
+
+
+            
+        }
 
         public async Task<IEnumerable<ClinicDto>> GetAllClinicsAsync()
         {

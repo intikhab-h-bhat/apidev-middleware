@@ -19,6 +19,16 @@ namespace Api.Dev.Middleware.Infrastructure.Repositories.ClinicRepos
             _context = context;
         }
 
+        public async  Task<bool> AddClinicAsync(Clinic clinic)
+        {
+            _context.Clinics.Add(clinic);
+            await _context.SaveChangesAsync();
+
+            return true;
+
+
+
+        }
 
         public async Task<IEnumerable<Clinic>> GeatAllClinicAsync()
         {

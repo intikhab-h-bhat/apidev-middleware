@@ -12,6 +12,7 @@ namespace Api.Dev.Middleware.Domain.Interfaces
 
         Task<IEnumerable<Clinic>> GeatAllClinicAsync();
 
+        Task<bool> AddClinicAsync(Clinic clinic);
 
     }
 }

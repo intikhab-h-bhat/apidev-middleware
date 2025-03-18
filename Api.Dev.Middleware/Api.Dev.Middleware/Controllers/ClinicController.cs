@@ -19,14 +19,14 @@ namespace Api.Dev.Middleware.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ClinicDto>>> GeatAllClinicAsync()
+        public async Task<ActionResult<IEnumerable<ClinicDto>>> GeatAllClinicsAsync()
         {
             try
             {
 
                 var allClinics = await _clinicService.GetAllClinicsAsync();
                 if (allClinics == null)
-                    return NotFound("No Record exists");
+                    return NotFound("No Record Exists");
 
                 return Ok(allClinics);
             }

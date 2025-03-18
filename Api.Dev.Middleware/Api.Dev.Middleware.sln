@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Dev.Middleware.Infrastr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Dev.Middleware.Application", "Api.Dev.Middleware.Application\Api.Dev.Middleware.Application.csproj", "{C715B994-D118-4B70-AE9B-AC930AD51186}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Dev.Middleware.Tests", "Api.Dev.Middleware.Tests\Api.Dev.Middleware.Tests.csproj", "{89E0D2B1-0556-429E-BB63-40B9029F122B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C715B994-D118-4B70-AE9B-AC930AD51186}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C715B994-D118-4B70-AE9B-AC930AD51186}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C715B994-D118-4B70-AE9B-AC930AD51186}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89E0D2B1-0556-429E-BB63-40B9029F122B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89E0D2B1-0556-429E-BB63-40B9029F122B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89E0D2B1-0556-429E-BB63-40B9029F122B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89E0D2B1-0556-429E-BB63-40B9029F122B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

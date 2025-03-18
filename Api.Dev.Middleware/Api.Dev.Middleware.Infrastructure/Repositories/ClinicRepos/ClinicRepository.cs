@@ -27,7 +27,6 @@ namespace Api.Dev.Middleware.Infrastructure.Repositories.ClinicRepos
             return true;
 
 
-
         }
 
         public async Task<IEnumerable<Clinic>> GeatAllClinicAsync()

@@ -14,5 +14,10 @@ namespace Api.Dev.Middleware.Domain.Interfaces
 
         Task<bool> AddClinicAsync(Clinic clinic);
 
+        Task<Clinic> GetClinicByIdAsync(int id);
+
+        Task<bool> DeleteClinicAsync(int id);
+
+        Task<Clinic> UpdateClinicAsync(int id, Clinic clinic);
     }
 }

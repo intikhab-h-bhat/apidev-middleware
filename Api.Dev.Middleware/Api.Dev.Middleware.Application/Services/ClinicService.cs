@@ -37,6 +37,14 @@ namespace Api.Dev.Middleware.Application.Services
             
         }
 
+        public async Task<bool> DeleteClinicAsync(int id)
+        {
+
+            return await  _clinicRepository.DeleteClinicAsync(id);          
+
+           
+        }
+
         public async Task<IEnumerable<ClinicDto>> GetAllClinicsAsync()
         {
 
@@ -54,6 +62,49 @@ namespace Api.Dev.Middleware.Application.Services
             return allClinicsDto;
 
           
+        }
+
+        public async Task<ClinicDto> GetClinicByIdAsync(int id)
+        {
+            var getClinic = await _clinicRepository.GetClinicByIdAsync(id);
+
+            if (getClinic == null)
+                return null;
+
+            var getClinicDto = new ClinicDto
+            {
+                ClinicID=getClinic.ClinicID,
+                ClinicName=getClinic.ClinicName,
+                Address=getClinic.Address,
+                ContactNumber=getClinic.ContactNumber,
+                Email=getClinic.ContactNumber
+            };
+
+            return getClinicDto;
+           
+        }
+
+        public async Task<ClinicDto> UpdateClinicAsync(int id, ClinicDto clinicDto)
+        {
+            var existingClinic = await _clinicRepository.GetClinicByIdAsync(id);
+
+            if (existingClinic == null)
+                return null;
+
+            existingClinic.ClinicName = clinicDto.ClinicName;
+            existingClinic.ContactNumber = clinicDto.ContactNumber;
+            existingClinic.Email = clinicDto.Email;
+            existingClinic.Address = clinicDto.Address;
+            existingClinic.Website = clinicDto.Website;
+
+
+            var UpdateClinic = await _clinicRepository.UpdateClinicAsync(id, existingClinic);
+
+
+
+
+            return clinicDto;
+            
         }
     }
 }

@@ -1,4 +1,5 @@
 using Api.Dev.Middleware.Infrastructure.Data;
+using Api.Dev.Middleware.Ui.ExceptionHandling;
 using Api.Dev.Middleware.Ui.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,13 @@ option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 builder.Services.AddSwaggerGen();
 builder.Services.AddDependencies();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
+
 
 
 
@@ -29,6 +37,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

@@ -11,6 +11,11 @@ namespace Api.Dev.Middleware.Application.Interfaces
     {
         Task<IEnumerable<ClinicDto>>  GetAllClinicsAsync();
         Task<bool> AddClinicAsync(ClinicDto clinicDto);
+        Task<ClinicDto> GetClinicByIdAsync(int id);
+
+        Task<bool> DeleteClinicAsync(int id);
+
+        Task<ClinicDto> UpdateClinicAsync(int id, ClinicDto clinicDto);
 
     }
 }

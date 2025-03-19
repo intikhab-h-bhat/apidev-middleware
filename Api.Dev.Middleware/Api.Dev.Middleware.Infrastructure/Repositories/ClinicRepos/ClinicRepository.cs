@@ -29,11 +29,57 @@ namespace Api.Dev.Middleware.Infrastructure.Repositories.ClinicRepos
 
         }
 
+        public async Task<bool> DeleteClinicAsync(int id)
+        {
+            var getClinic = await _context.Clinics.FirstOrDefaultAsync(c => c.ClinicID == id);
+            if (getClinic == null)
+                return false;
+
+            _context.Clinics.Remove(getClinic);
+            await _context.SaveChangesAsync();
+
+            return true;
+           
+        }
+
         public async Task<IEnumerable<Clinic>> GeatAllClinicAsync()
         {
             var allClinics = await _context.Clinics.ToListAsync();
 
             return allClinics;
+        }
+
+        public async Task<Clinic> GetClinicByIdAsync(int id)
+        {
+            var getClinic = await _context.Clinics.FirstOrDefaultAsync(c=> c.ClinicID==id);
+
+            if (getClinic == null)
+                return null;
+
+            return getClinic;
+        }
+
+        public async Task<Clinic> UpdateClinicAsync(int id, Clinic clinic)
+        {
+            var existingClinic = await _context.Clinics.FirstOrDefaultAsync(c=>c.ClinicID==id);
+
+            if (existingClinic == null)
+            {
+                return null; 
+            }
+
+            // Update fields
+            existingClinic.ClinicName = clinic.ClinicName;
+            existingClinic.ContactNumber = clinic.ContactNumber;
+            existingClinic.Email = clinic.Email;
+            existingClinic.Address = clinic.Address;
+            existingClinic.Website = clinic.Website;
+
+            _context.Clinics.Update(existingClinic);
+            await _context.SaveChangesAsync();
+
+            return existingClinic; // Return updated entity
+
         }
     }
 }

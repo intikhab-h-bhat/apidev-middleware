@@ -18,6 +18,7 @@ namespace Api.Dev.Middleware.Application
         {
 
             services.AddTransient<IClinic, ClinicService>();
+            services.AddTransient<IStaffService, StaffService>();
 
             return services;
         }

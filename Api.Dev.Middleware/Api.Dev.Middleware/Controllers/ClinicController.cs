@@ -11,11 +11,13 @@ namespace Api.Dev.Middleware.Controllers
     public class ClinicController : ControllerBase
     {
         private readonly IClinic _clinicService;
+        private readonly ILogger<ClinicController> _logger;
 
 
-        public ClinicController(IClinic clinicService)
+        public ClinicController(IClinic clinicService, ILogger<ClinicController> logger)
         {
             _clinicService = clinicService;
+            _logger = logger;
         }
 
 
@@ -30,7 +32,7 @@ namespace Api.Dev.Middleware.Controllers
                 if (allClinics == null)
                 // return NotFound("No Record Exists");
                 {
-                    throw new KeyNotFoundException($"No Clinic Found.");
+                    throw new Exception($"No Clinic Found.");
                 }
 
                 return Ok(allClinics);
@@ -62,15 +64,19 @@ namespace Api.Dev.Middleware.Controllers
             //try
             //{
 
-                if (id <= 0)
+            if (id <= 0)
+            {
+                _logger.LogWarning("BadRequest");
                 return BadRequest("The id must be greater than 0");
+            }
 
                 var getClinic = await _clinicService.GetClinicByIdAsync(id);
 
                 if (getClinic == null)
                 // return NotFound($"Clinic with {id} not found");
                 {
-                    throw new NotFoundException($"Clinic with {id} not found");
+                    //_logger.LogError($"Clinic with {id} not found");
+                    throw new Exception($"Clinic with {id} not found");
                 }
 
 

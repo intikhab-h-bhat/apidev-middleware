@@ -32,39 +32,63 @@ namespace Api.Dev.Middleware.Ui.ExceptionHandling
             }
         }
 
-            private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            // Set the response content type
-            context.Response.ContentType = "application/json";
+            //context.Response.ContentType = "application/json";
+            //context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            // Determine the status code and error message
-            var (statusCode, message) = exception switch
+            //var errorResponse = new
+            //{
+            //    message = "An unexpected error occurred.",
+            //    error = exception.Message,
+            //    statusCode = context.Response.StatusCode
+            //};
+
+            //return context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
+            Console.WriteLine($"Exception: {exception.Message}"); // Logging
+            return context.Response.WriteAsync(JsonSerializer.Serialize(new
             {
-                NotFoundException _ => (HttpStatusCode.NotFound, "Resource not found"),
-                ValidationException _ => (HttpStatusCode.BadRequest, "Invalid input"),
-                _ => (HttpStatusCode.InternalServerError, "An error occurred")
-            };
-
-            // Create the error response
-            var response = new
-            {
-                StatusCode = (int)statusCode,
-                Message = message,
-                // Include stack trace only in development
-                Details = context.RequestServices.GetRequiredService<IHostEnvironment>().IsDevelopment()
-                    ? exception.StackTrace
-                    : null
-            };
-
-            // Serialize the response
-            var jsonResponse = JsonSerializer.Serialize(response);
-
-            // Set the HTTP status code
-            context.Response.StatusCode = (int)statusCode;
-
-            // Write the JSON response
-            await context.Response.WriteAsync(jsonResponse);
+                message = "An error occurred.",
+                error = exception.Message,
+                statusCode = 500
+            }));
         }
+
+
+
+        //    private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
+        //{
+        //    // Set the response content type
+        //    context.Response.ContentType = "application/json";
+
+        //    // Determine the status code and error message
+        //    var (statusCode, message) = exception switch
+        //    {
+        //        NotFoundException _ => (HttpStatusCode.NotFound, "Resource not found"),
+        //        ValidationException _ => (HttpStatusCode.BadRequest, "Invalid input"),
+        //        _ => (HttpStatusCode.InternalServerError, "An error occurred")
+        //    };
+
+        //    // Create the error response
+        //    var response = new
+        //    {
+        //        StatusCode = (int)statusCode,
+        //        Message = message,
+        //        // Include stack trace only in development
+        //        Details = context.RequestServices.GetRequiredService<IHostEnvironment>().IsDevelopment()
+        //            ? exception.StackTrace
+        //            : null
+        //    };
+
+        //    // Serialize the response
+        //    var jsonResponse = JsonSerializer.Serialize(response);
+
+        //    // Set the HTTP status code
+        //    context.Response.StatusCode = (int)statusCode;
+
+        //    // Write the JSON response
+        //    await context.Response.WriteAsync(jsonResponse);
+        //}
     }
 }
 

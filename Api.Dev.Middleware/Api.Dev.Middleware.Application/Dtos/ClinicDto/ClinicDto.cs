@@ -12,17 +12,17 @@ namespace Api.Dev.Middleware.Application.Dtos.ClinicDto
         public int ClinicID { get; set; }
         [Required]
         public string ClinicName { get; set; }
-        [Required]
+        //[Required]
         public string Address { get; set; }
-        [Required]
-        [MinLength(10)]
-        [RegularExpression(@"^\d+$", ErrorMessage = "Please enter valid numeric value.")]
+        //[Required]
+        //[MinLength(10)]
+        //[RegularExpression(@"^\d+$", ErrorMessage = "Please enter valid numeric value.")]
         public string ContactNumber { get; set; }
-        [Required]
-        [EmailAddress]
+        //[Required]
+        //[EmailAddress]
         public string Email { get; set; }
         public string Website { get; set; }
-        public DateTime CreatedDate { get; set; }
+       // public DateTime? CreatedDate { get; set; } = null;
 
     }
 }

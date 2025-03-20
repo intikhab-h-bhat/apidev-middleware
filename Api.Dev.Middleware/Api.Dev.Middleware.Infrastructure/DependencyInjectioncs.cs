@@ -1,4 +1,5 @@
 ﻿using Api.Dev.Middleware.Domain.Interfaces;
+using Api.Dev.Middleware.Infrastructure.Repositories;
 using Api.Dev.Middleware.Infrastructure.Repositories.ClinicRepos;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,6 +17,7 @@ namespace Api.Dev.Middleware.Infrastructure
         {
 
             services.AddTransient<IClinicRepository, ClinicRepository>();
+            services.AddTransient<IStaffRepository, StaffReppository>();
 
             return services;
 

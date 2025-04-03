@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Api.Dev.Middleware.Application.Services
 {
-    public class ClinicService : IClinic
+    public class ClinicService : IClinicService
     {
         private readonly IClinicRepository _clinicRepository;
 
@@ -19,7 +19,7 @@ namespace Api.Dev.Middleware.Application.Services
             _clinicRepository = clinicRepository;
         }
 
-        public async Task<bool> AddClinicAsync(ClinicDto clinicDto)
+        public async Task<ClinicDto> AddClinicAsync(ClinicDto clinicDto)
         {
             
 
@@ -30,10 +30,19 @@ namespace Api.Dev.Middleware.Application.Services
             addClinic.ContactNumber = clinicDto.ContactNumber;
             addClinic.Website = clinicDto.Website;
 
+            var clinicStatus = await _clinicRepository.AddClinicAsync(addClinic);
 
-            return await _clinicRepository.AddClinicAsync(addClinic);
+            var addClinicDto = new ClinicDto
+            {
+                ClinicID=clinicStatus.ClinicID,
+                ClinicName = clinicStatus.ClinicName,
+                Address = clinicStatus.Address,
+                Email = clinicStatus.Email,
+                ContactNumber = clinicStatus.ContactNumber,
+                Website = clinicStatus.Website   
+            };
 
-
+            return addClinicDto;
             
         }
 
@@ -49,13 +58,14 @@ namespace Api.Dev.Middleware.Application.Services
         {
 
             var allClinics = await _clinicRepository.GeatAllClinicAsync();
-            var allClinicsDto = allClinics.Select(s => new ClinicDto
+            var allClinicsDto = allClinics.Select(c => new ClinicDto
             {
-                ClinicID = s.ClinicID,
-                ClinicName=s.ClinicName,
-                Address=s.Address,
-                ContactNumber=s.ContactNumber,
-                Email=s.Email
+                ClinicID = c.ClinicID,
+                ClinicName=c.ClinicName,
+                Address=c.Address,
+                ContactNumber=c.ContactNumber,
+                Email=c.Email,
+                Website=c.Website
             });
 
 
@@ -84,6 +94,29 @@ namespace Api.Dev.Middleware.Application.Services
            
         }
 
+        public async Task<ClinicDto> GetClinicByNameAsync(string clinicName)
+        {
+            var getClinicByName = await _clinicRepository.GetClinicByNameAsync(clinicName);
+
+            if (getClinicByName == null)
+                return null;
+
+            var getClinicByNameDto = new ClinicDto
+            {
+                ClinicID=getClinicByName.ClinicID,
+                ClinicName=getClinicByName.ClinicName,
+                Address=getClinicByName.Address,
+                ContactNumber=getClinicByName.ContactNumber,
+                Email = getClinicByName.Email,
+                Website = getClinicByName.Website
+
+            };
+
+
+
+            return getClinicByNameDto;
+        }
+
         public async Task<ClinicDto> UpdateClinicAsync(int id, ClinicDto clinicDto)
         {
             var existingClinic = await _clinicRepository.GetClinicByIdAsync(id);
@@ -106,5 +139,9 @@ namespace Api.Dev.Middleware.Application.Services
             return clinicDto;
             
         }
+
+
+
+
     }
 }

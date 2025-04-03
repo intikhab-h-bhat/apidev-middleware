@@ -13,22 +13,20 @@ namespace Api.Dev.Middleware.Domain.Entities
         public int ClinicID { get; set; }
         [Required]
         public string ClinicName { get; set; }
-        //[Required]
+        [Required]
         public string Address { get; set; }
-        //[Required]
-        //[MinLength(10)]
-        //[RegularExpression(@"^\d+$", ErrorMessage = "Please enter valid numeric value.")]
-        public string ContactNumber { get; set; }
+        [Required]
+        [MinLength(10)]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Please enter valid numeric value.")]
+        public string  ContactNumber { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }
         public string Website { get; set; }
         public DateTime? CreatedDate { get; set; } = null;
 
-        //// Navigation Properties
+      
         public ICollection<Staff> Staff { get; set; }
-        //public ICollection<Order> Orders { get; set; }
-        //public ICollection<Billing> Billings { get; set; }
-        //public ICollection<Patient> Patients { get; set; }
+        
     }
 }

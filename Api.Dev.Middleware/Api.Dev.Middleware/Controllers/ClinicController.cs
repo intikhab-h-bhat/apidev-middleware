@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Dev.Middleware.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+   [ApiController]
     public class ClinicController : ControllerBase
     {
-        private readonly IClinic _clinicService;
+        private readonly IClinicService _clinicService;
         private readonly ILogger<ClinicController> _logger;
 
 
-        public ClinicController(IClinic clinicService, ILogger<ClinicController> logger)
+        public ClinicController(IClinicService clinicService, ILogger<ClinicController> logger)
         {
             _clinicService = clinicService;
             _logger = logger;
@@ -23,6 +23,9 @@ namespace Api.Dev.Middleware.Controllers
 
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]        
         public async Task<ActionResult<IEnumerable<ClinicDto>>> GeatAllClinicsAsync()
         {
             try
@@ -49,16 +52,33 @@ namespace Api.Dev.Middleware.Controllers
         }
 
         [HttpPost]
-
-        public async Task<ActionResult<bool>> AddClinicAsync([FromBody] ClinicDto clinicDto)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ClinicDto>> AddClinicAsync([FromBody] ClinicDto clinicDto)
         {
+            if (clinicDto == null)
+                return BadRequest();
 
-            return await _clinicService.AddClinicAsync(clinicDto);
+
+            var addClinic = await _clinicService.AddClinicAsync(clinicDto);
+            if (addClinic == null)
+                return null;
+
+
+           // return CreatedAtRoute("GetStudentById", new { id=addClinic.ClinicID }, addClinic);
+
+            return Ok(addClinic);
         }
 
 
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}",Name ="GetStudentById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ClinicDto>> GetClinicByIdAsync(int id)
         {
             //try
@@ -91,23 +111,49 @@ namespace Api.Dev.Middleware.Controllers
 
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpGet("{clinicName:alpha}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ClinicDto>> GetClinicByNameAsync(string clinicName)
+        {
+            if (string.IsNullOrEmpty(clinicName))
+                return BadRequest();
 
+            var getClicnicByName = await _clinicService.GetClinicByNameAsync(clinicName);
+            if (getClicnicByName == null)
+                return NotFound($"clinic with name {clinicName} not found");
+
+            return Ok(getClicnicByName);
+
+        }
+
+
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<bool>> DeleteClinicAsync(int id)
         {
             if (id <= 0)
-                return BadRequest("Id cannot bel less than or equal to 0");
+                return BadRequest("Id cannot be less than or equal to 0");
 
-            var status = await _clinicService.DeleteClinicAsync(id);
+            var deleteClinic = await _clinicService.DeleteClinicAsync(id);
 
-            if (status == false)
-                return NotFound("clinic not found");
+            if (deleteClinic == false)
+                return NotFound($"clinic with {id} not found");
 
-            return Ok(status);
+            return Ok(true);
         }
 
         [HttpPut("{id:int}")]
-
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ClinicDto>> UpdateClinicAsync(int id, [FromBody] ClinicDto clinicDto)
         {
 

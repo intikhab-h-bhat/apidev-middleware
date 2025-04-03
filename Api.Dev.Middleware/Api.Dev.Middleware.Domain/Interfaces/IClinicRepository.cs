@@ -12,12 +12,16 @@ namespace Api.Dev.Middleware.Domain.Interfaces
 
         Task<IEnumerable<Clinic>> GeatAllClinicAsync();
 
-        Task<bool> AddClinicAsync(Clinic clinic);
+        Task<Clinic> AddClinicAsync(Clinic clinic);
 
         Task<Clinic> GetClinicByIdAsync(int id);
+        Task<Clinic> GetClinicByNameAsync(string clinicName);
 
         Task<bool> DeleteClinicAsync(int id);
 
         Task<Clinic> UpdateClinicAsync(int id, Clinic clinic);
+
+        
+
     }
 }

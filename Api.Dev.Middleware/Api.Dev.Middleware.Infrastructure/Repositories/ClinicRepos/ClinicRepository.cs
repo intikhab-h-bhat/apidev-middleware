@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Api.Dev.Middleware.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Api.Dev.Middleware.Application.Dtos.StaffDto;
+using Api.Dev.Middleware.Application.Dtos.ClinicDto;
 
 namespace Api.Dev.Middleware.Infrastructure.Repositories.ClinicRepos
 
@@ -19,12 +21,12 @@ namespace Api.Dev.Middleware.Infrastructure.Repositories.ClinicRepos
             _context = context;
         }
 
-        public async  Task<bool> AddClinicAsync(Clinic clinic)
+        public async  Task<Clinic> AddClinicAsync(Clinic clinic)
         {
             _context.Clinics.Add(clinic);
             await _context.SaveChangesAsync();
 
-            return true;
+            return clinic;
 
 
         }
@@ -51,34 +53,34 @@ namespace Api.Dev.Middleware.Infrastructure.Repositories.ClinicRepos
 
         public async Task<Clinic> GetClinicByIdAsync(int id)
         {
-            var getClinic = await _context.Clinics.FirstOrDefaultAsync(c=> c.ClinicID==id);
+            var getClinicById = await _context.Clinics.FirstOrDefaultAsync(c=> c.ClinicID==id);
 
-            if (getClinic == null)
+            if (getClinicById == null)
                 return null;
 
-            return getClinic;
+            return getClinicById;
         }
+
+        public async Task<Clinic> GetClinicByNameAsync(string clinicName)
+        {
+            var getClinicByName = await _context.Clinics.FirstOrDefaultAsync(c => c.ClinicName.Contains(clinicName));
+
+            if (getClinicByName == null)
+                return null;
+
+
+            return getClinicByName;
+
+        }
+
+       
 
         public async Task<Clinic> UpdateClinicAsync(int id, Clinic clinic)
         {
-            var existingClinic = await _context.Clinics.FirstOrDefaultAsync(c=>c.ClinicID==id);
-
-            if (existingClinic == null)
-            {
-                return null; 
-            }
-
-            // Update fields
-            existingClinic.ClinicName = clinic.ClinicName;
-            existingClinic.ContactNumber = clinic.ContactNumber;
-            existingClinic.Email = clinic.Email;
-            existingClinic.Address = clinic.Address;
-            existingClinic.Website = clinic.Website;
-
-            _context.Clinics.Update(existingClinic);
+             _context.Clinics.Update(clinic);
             await _context.SaveChangesAsync();
 
-            return existingClinic; // Return updated entity
+            return clinic; 
 
         }
     }

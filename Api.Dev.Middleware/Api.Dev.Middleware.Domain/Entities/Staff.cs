@@ -11,10 +11,9 @@ namespace Api.Dev.Middleware.Domain.Entities
         public int StaffID { get; set; }
         public int ClinicID { get; set; }
         public string StaffName { get; set; }
-        public string Role { get; set; }
         public string ContactNumber { get; set; }
         public string Email { get; set; }
-        public string AssignedTests { get; set; }
+      
         public string DateOfJoining { get; set; }
         // Navigation Property
         public Clinic Clinic { get; set; }

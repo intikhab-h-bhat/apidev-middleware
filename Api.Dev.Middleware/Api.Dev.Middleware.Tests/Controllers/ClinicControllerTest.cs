@@ -8,6 +8,7 @@ using Api.Dev.Middleware.Application.Interfaces;
 using Api.Dev.Middleware.Application.Services;
 using Api.Dev.Middleware.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
@@ -15,15 +16,18 @@ namespace Api.Dev.Middleware.Tests.Controllers
 {
     public class ClinicControllerTest
     {
-
-        private readonly Mock<IClinic> _mockClinicService;
+       
+        private readonly Mock<IClinicService> _mockClinicService;
         private readonly ClinicController _controller;
 
+        private readonly Mock<ILogger<ClinicController>> _mockLogger;  // Mock Logger
+        
         public ClinicControllerTest()
         {
-            _mockClinicService = new Mock<IClinic>();
+            _mockClinicService = new Mock<IClinicService>();
+            _mockLogger = new Mock<ILogger<ClinicController>>();  // Initialize Mock Logger
 
-            _controller =new ClinicController(_mockClinicService.Object);
+            _controller =new ClinicController(_mockClinicService.Object,_mockLogger.Object);
         }
 
 

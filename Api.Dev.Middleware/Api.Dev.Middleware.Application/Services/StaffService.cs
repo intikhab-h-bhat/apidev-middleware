@@ -28,10 +28,9 @@ namespace Api.Dev.Middleware.Application.Services
             {
                 StaffName = staffDto.StaffName,
                 ClinicID = staffDto.ClinicID,
-                Role = staffDto.Role,
-                ContactNumber = staffDto.ContactNumber,
+               ContactNumber = staffDto.ContactNumber,
                 Email = staffDto.Email,
-                AssignedTests = staffDto.AssignedTests,
+               
                 DateOfJoining=staffDto.DateOfJoining,
                 
 
@@ -42,6 +41,93 @@ namespace Api.Dev.Middleware.Application.Services
 
 
             return staffDto;
+
+
+        }
+
+        public async Task<bool> DeleteStaffAsync(int id)
+        {
+            var deleteStaff = await _staffRepository.DeleteStaffAsync(id);
+
+            if (!deleteStaff)
+                return false;
+            return true;
+        }
+
+        public async Task<IEnumerable<StaffDto>> GetAllStaffAsync()
+        {
+            var allStaff = await _staffRepository.GetAllStaffAsync();
+
+            var allStaffDto = allStaff.Select(s => new StaffDto
+            {
+                StaffName = s.StaffName,
+                ClinicID=s.ClinicID,
+                ContactNumber=s.ContactNumber,
+                Email=s.Email
+            });
+
+            return allStaffDto;
+        }
+
+        public async Task<StaffDto> GetStaffByIdAsync(int id)
+        {
+            var getStaff = await _staffRepository.GetStaffByIdAsync(id);
+
+            if (getStaff == null)
+                return null;
+
+            var getStaffDto = new StaffDto()
+            {
+                StaffName = getStaff.StaffName,
+                ClinicID = getStaff.ClinicID,
+                ContactNumber = getStaff.ContactNumber,
+                Email = getStaff.Email,
+            };
+
+            return getStaffDto;
+        }
+
+        public async Task<StaffDto> GetStaffByNameAsync(string staffName)
+        {
+            var getStaffByName = await _staffRepository.GetStaffByNameAsync(staffName);
+
+            if (getStaffByName == null)
+                return null;
+
+            var getStaffDto = new StaffDto
+            {
+                StaffID = getStaffByName.StaffID,
+                ClinicID = getStaffByName.ClinicID,
+                ContactNumber = getStaffByName.ContactNumber,
+                Email = getStaffByName.Email,
+
+
+            };
+
+            return getStaffDto;
+        }
+
+        public async Task<bool> UpdateStaffAsync(int id, StaffDto staffDto)
+        {
+            var existingStaff = await _staffRepository.GetStaffByIdAsync(id);
+
+            if (existingStaff == null)
+                return false;
+
+            existingStaff.StaffName = staffDto.StaffName;
+            existingStaff.ClinicID = staffDto.ClinicID;
+            existingStaff.ContactNumber = staffDto.ContactNumber;
+            existingStaff.Email = staffDto.Email;
+
+
+            var updateStaff = await _staffRepository.UpdateStaffAsync(existingStaff);
+            
+            if (updateStaff == null)
+                    return false;
+
+
+            return true;
+
 
 
         }

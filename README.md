@@ -30,8 +30,7 @@ Follow these steps to set up the project locally:
 
 ### 1️⃣ **Clone the Repository**  
 ```bash
-git clone https://github.com/your-username/clinic-staff-api.git
-cd clinic-staff-api
+git clone https://github.com/intikhab-h-bhat/apidev-middleware.git
 ```
 
 # Setup the Database

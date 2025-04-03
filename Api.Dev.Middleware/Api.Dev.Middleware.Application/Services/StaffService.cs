@@ -60,6 +60,7 @@ namespace Api.Dev.Middleware.Application.Services
 
             var allStaffDto = allStaff.Select(s => new StaffDto
             {
+                StaffID=s.StaffID,
                 StaffName = s.StaffName,
                 ClinicID=s.ClinicID,
                 ContactNumber=s.ContactNumber,

@@ -26,8 +26,11 @@ namespace Api.Dev.Middleware.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]        
-        public async Task<ActionResult<IEnumerable<ClinicDto>>> GeatAllClinicsAsync()
+        public async Task<ActionResult<IEnumerable<ClinicDto>>> GetAllClinicsAsync()
         {
+
+            _logger.LogInformation("GetAllClinicAsync method started");
+
             try
             {
 
@@ -95,7 +98,7 @@ namespace Api.Dev.Middleware.Controllers
                 if (getClinic == null)
                 // return NotFound($"Clinic with {id} not found");
                 {
-                    //_logger.LogError($"Clinic with {id} not found");
+                    _logger.LogError($"Clinic with {id} not found");
                     throw new Exception($"Clinic with {id} not found");
                 }
 

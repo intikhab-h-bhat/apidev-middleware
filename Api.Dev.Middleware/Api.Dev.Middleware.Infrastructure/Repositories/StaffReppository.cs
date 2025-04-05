@@ -49,8 +49,10 @@ namespace Api.Dev.Middleware.Infrastructure.Repositories
 
         public async Task<IEnumerable<Staff>> GetAllStaffAsync()
         {
-            var allStaff = await _context.Staff.ToListAsync();
-
+            //var allStaff = await _context.Staff.ToListAsync();
+            var allStaff = await _context.Staff
+        .Include(s => s.Clinic)
+        .ToListAsync();
             return allStaff;
         }
 

@@ -12,7 +12,7 @@ namespace Api.Dev.Middleware.Application.Interfaces
     {
 
         Task<StaffDto> AddStaffAsync(StaffDto staffDto);        
-        Task<IEnumerable<StaffDto>> GetAllStaffAsync();
+        Task<IEnumerable<GetStaffDto>> GetAllStaffAsync();
         Task<StaffDto> GetStaffByIdAsync(int id);
         Task<StaffDto> GetStaffByNameAsync(string staffName);
         Task<bool> UpdateStaffAsync(int id,StaffDto staffDto);

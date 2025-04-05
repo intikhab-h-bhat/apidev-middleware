@@ -61,7 +61,7 @@ namespace Api.Dev.Middleware.Ui.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<StaffDto>>> GetAllStaffAsync()
+        public async Task<ActionResult<IEnumerable<GetStaffDto>>> GetAllStaffAsync()
         {
             var allStaff = await _staffService.GetAllStaffAsync();
             if (allStaff == null)

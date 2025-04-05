@@ -54,17 +54,19 @@ namespace Api.Dev.Middleware.Application.Services
             return true;
         }
 
-        public async Task<IEnumerable<StaffDto>> GetAllStaffAsync()
+        public async Task<IEnumerable<GetStaffDto>> GetAllStaffAsync()
         {
             var allStaff = await _staffRepository.GetAllStaffAsync();
 
-            var allStaffDto = allStaff.Select(s => new StaffDto
+            var allStaffDto = allStaff.Select(s => new GetStaffDto
             {
                 StaffID=s.StaffID,
                 StaffName = s.StaffName,
                 ClinicID=s.ClinicID,
+               ClinicName=s.Clinic.ClinicName,
                 ContactNumber=s.ContactNumber,
-                Email=s.Email
+                Email=s.Email,
+                DateOfJoining=s.DateOfJoining
             });
 
             return allStaffDto;
@@ -119,6 +121,7 @@ namespace Api.Dev.Middleware.Application.Services
             existingStaff.ClinicID = staffDto.ClinicID;
             existingStaff.ContactNumber = staffDto.ContactNumber;
             existingStaff.Email = staffDto.Email;
+            existingStaff.DateOfJoining = staffDto.DateOfJoining;
 
 
             var updateStaff = await _staffRepository.UpdateStaffAsync(existingStaff);

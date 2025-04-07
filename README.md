@@ -4,7 +4,7 @@ This is a sample **ASP.NET Core Web API** for managing **Clinics** and **Staffs*
 
 ---
 
-## 🚀 Features  
+## Features  
 
 - **CRUD Operations** for Clinics and Staffs  
 - Entity Framework Core for ORM  
@@ -14,7 +14,7 @@ This is a sample **ASP.NET Core Web API** for managing **Clinics** and **Staffs*
 
 ---
 
-## 🖥️ Technologies Used  
+## Technologies Used  
 
 - **ASP.NET Core 8**  
 - **Entity Framework Core**  
@@ -24,11 +24,11 @@ This is a sample **ASP.NET Core Web API** for managing **Clinics** and **Staffs*
 
 ---
 
-## ⚡ Getting Started  
+## Getting Started  
 
 Follow these steps to set up the project locally:  
 
-### 1️⃣ **Clone the Repository**  
+### **Clone the Repository**  
 ```bash
 git clone https://github.com/intikhab-h-bhat/apidev-middleware.git
 ```

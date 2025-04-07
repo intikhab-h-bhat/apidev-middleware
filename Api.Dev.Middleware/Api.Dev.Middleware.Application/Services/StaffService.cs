@@ -100,6 +100,7 @@ namespace Api.Dev.Middleware.Application.Services
             var getStaffDto = new StaffDto
             {
                 StaffID = getStaffByName.StaffID,
+                StaffName=getStaffByName.StaffName,
                 ClinicID = getStaffByName.ClinicID,
                 ContactNumber = getStaffByName.ContactNumber,
                 Email = getStaffByName.Email,

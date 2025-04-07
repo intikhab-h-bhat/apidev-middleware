@@ -49,7 +49,7 @@ namespace Api.Dev.Middleware.Tests.Controllers
                 .ReturnsAsync(expectedClinics);
 
             // Act
-            var result = await _controller.GeatAllClinicsAsync();
+            var result = await _controller.GetAllClinicsAsync();
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
@@ -79,21 +79,14 @@ namespace Api.Dev.Middleware.Tests.Controllers
         public async Task ClinicController_GetAllClinicsAsync_NotFound()
         {
             
-            //Arrange
-            //var noDataFound = new List<ClinicDto>
-            //{
-            //    //Empty list
-            //};
-
-            //_mockClinicService.Setup(s => s.GetAllClinicsAsync()).ReturnsAsync(noDataFound);
-
+            
             // Arrange
             _mockClinicService.Setup(s => s.GetAllClinicsAsync())
                 .ReturnsAsync((IEnumerable<ClinicDto>)null);  
             
 
             // Act
-            var result = await _controller.GeatAllClinicsAsync();
+            var result = await _controller.GetAllClinicsAsync();
 
             // Assert
             var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);

@@ -113,7 +113,6 @@ namespace Api.Dev.Middleware.Application.Services
             };
 
 
-
             return getClinicByNameDto;
         }
 
@@ -132,9 +131,6 @@ namespace Api.Dev.Middleware.Application.Services
 
 
             var UpdateClinic = await _clinicRepository.UpdateClinicAsync(id, existingClinic);
-
-
-
 
             return clinicDto;
             

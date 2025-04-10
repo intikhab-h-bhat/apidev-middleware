@@ -34,24 +34,24 @@ namespace Api.Dev.Middleware.Ui.ExceptionHandling
 
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            //context.Response.ContentType = "application/json";
-            //context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            //var errorResponse = new
-            //{
-            //    message = "An unexpected error occurred.",
-            //    error = exception.Message,
-            //    statusCode = context.Response.StatusCode
-            //};
-
-            //return context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
-            Console.WriteLine($"Exception: {exception.Message}"); // Logging
-            return context.Response.WriteAsync(JsonSerializer.Serialize(new
+            var errorResponse = new
             {
-                message = "An error occurred.",
+                message = "An unexpected error occurred.",
                 error = exception.Message,
-                statusCode = 500
-            }));
+                statusCode = context.Response.StatusCode
+            };
+
+            return context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
+            //Console.WriteLine($"Exception: {exception.Message}"); // Logging
+            //return context.Response.WriteAsync(JsonSerializer.Serialize(new
+            //{
+            //    message = "An error occurred.",
+            //    error = exception.Message,
+            //    statusCode = 500
+            //}));
         }
 
 

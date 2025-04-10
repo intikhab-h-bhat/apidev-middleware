@@ -28,7 +28,6 @@ namespace Api.Dev.Middleware.Infrastructure.Repositories.ClinicRepos
 
             return clinic;
 
-
         }
 
         public async Task<bool> DeleteClinicAsync(int id)

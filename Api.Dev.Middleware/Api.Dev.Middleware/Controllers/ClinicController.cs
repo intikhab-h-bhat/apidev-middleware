@@ -2,12 +2,14 @@
 using Api.Dev.Middleware.Application.Interfaces;
 using Api.Dev.Middleware.Domain.Entities;
 using Api.Dev.Middleware.Ui.ExceptionHandling;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Dev.Middleware.Controllers
 {
     [Route("api/[controller]")]
    [ApiController]
+    [Authorize]
     public class ClinicController : ControllerBase
     {
         private readonly IClinicService _clinicService;
@@ -24,6 +26,7 @@ namespace Api.Dev.Middleware.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]        
         public async Task<ActionResult<IEnumerable<ClinicDto>>> GetAllClinicsAsync()

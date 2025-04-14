@@ -1,7 +1,12 @@
+
 using Api.Dev.Middleware.Infrastructure.Data;
 using Api.Dev.Middleware.Ui.ExceptionHandling;
 using Api.Dev.Middleware.Ui.ExtensionMethods;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +18,42 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
+    options =>
+    {
+        options.Password.RequireDigit = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequiredLength = 1;
+        options.Password.RequiredUniqueChars = 0;
+    })
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+});
+
+builder.Services.AddAuthorization();
+
 
 
 

@@ -50,7 +50,7 @@ namespace Api.Dev.Middleware.Ui.Controllers
           
         }
 
-        [HttpPost("logout")]
+        [HttpGet("logout")]
         public async Task<ActionResult<string>> LogoutAsync()
         {
            var status = await _authService.LogOutAsync();
